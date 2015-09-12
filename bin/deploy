@@ -8,4 +8,4 @@ $MYBASE/bin/setup-venv 2>/dev/null
 
 [[ -f $MYBASE/.env ]] && source $MYBASE/.env
 
-$MYBASE/venv/bin/ansible-playbook --extra-vars="deployer_base=$MYBASE" -v -i $MYBASE/hosts $MYBASE/config/deploy.yml
+$MYBASE/venv/bin/ansible-playbook --extra-vars="deployer_base=$MYBASE" -i $MYBASE/hosts $MYBASE/config/deploy.yml

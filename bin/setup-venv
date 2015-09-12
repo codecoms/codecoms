@@ -16,10 +16,7 @@ fi
 if [[ ! -d ./venv ]]; then
   virtualenv ./venv
   ./venv/bin/pip install --upgrade pip
-fi
-
-if [[ -f requirements.txt ]]; then
-  ./venv/bin/pip --no-cache-dir install --upgrade -r requirements.txt
+  [[ -f requirements.txt ]] && ./venv/bin/pip --no-cache-dir install --upgrade -r requirements.txt
 fi
 
 # patch ansible w/ new digital_ocean_v2_api
