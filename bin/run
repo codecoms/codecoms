@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+MYROOT="$( readlink -f $(dirname $(readlink -f -- $0))/.. )"
+MYSELF="$( basename $0 )"
+
+err() { echo "$@" 1>&2; }
+
+usage() {
+  err "Usage: $MYSELF <arguments>"
+}
+
+cd $MYROOT
+
+source ./venv/bin/activate
+
+"$@"

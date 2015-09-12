@@ -1,0 +1,15 @@
+---
+
+- hosts: localhost
+  tasks:
+    - local_action: digital_ocean state=present command=droplet name=obiwan size_id=1gb
+                    region_id=nyc2 image_id=13090046 api_token={{ lookup('env', 'DO_API_TOKEN') }} wait_timeout=500 unique_name=yes
+      register: reg_droplet
+
+    - debug: msg="ID is {{ reg_droplet.droplet.id }}"
+
+    - debug: msg="IP is {{ reg_droplet.droplet.ip_address }}"
+
+
+#    TASK: [digital_ocean state=present command=droplet name=obiwan size_id=1gb region_id=nyc2 image_id=13090046 api_token=c26c3fb10be1f782203fe21d2fcb5f7e4c4418463c61cae861b9a04e8809c3da wait_timeout=500] ***
+#    changed: [localhost -> 127.0.0.1] => {"changed": true, "droplet": {"backup_ids": [], "created_at": "2015-09-12T12:43:17Z", "disk": 30, "features": ["virtio"], "id": 7280322, "image": {"created_at": "2015-08-10T22:31:04Z", "distribution": "CentOS", "id": 13090046, "min_disk_size": 20, "name": "6.7 x64", "public": true, "regions": ["nyc1", "ams1", "sfo1", "nyc2", "ams2", "sgp1", "lon1", "nyc3", "ams3", "fra1", "tor1"], "slug": "centos-6-5-x64", "type": "snapshot"}, "ip_address": "162.243.90.7", "kernel": {"id": 4061, "name": "CentOS 6.5 x64 vmlinuz-2.6.32-504.12.2.el6.x86_64", "version": "2.6.32-504.12.2.el6.x86_64"}, "locked": false, "memory": 1024, "name": "obiwan", "networks": {"v4": [{"gateway": "162.243.90.1", "ip_address": "162.243.90.7", "netmask": "255.255.255.0", "type": "public"}], "v6": []}, "next_backup_window": null, "region": {"available": true, "features": ["private_networking", "backups", "metadata"], "name": "New York 2", "sizes": ["32gb", "16gb", "2gb", "1gb", "4gb", "8gb", "512mb", "64gb", "48gb"], "slug": "nyc2"}, "size": {"available": true, "disk": 30, "memory": 1024, "price_hourly": 0.01488, "price_monthly": 10.0, "regions": ["nyc2", "sgp1", "ams1", "sfo1", "lon1", "nyc3", "ams3", "nyc1", "ams2", "fra1"], "slug": "1gb", "transfer": 2.0, "vcpus": 1}, "size_slug": "1gb", "snapshot_ids": [], "status": "active", "vcpus": 1}}

@@ -1,0 +1,5 @@
+/.env*
+*.pyc
+/venv
+/t.log
+/t.sh

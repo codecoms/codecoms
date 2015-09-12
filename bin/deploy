@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+MYSELF="$( basename $0 )"
+MYDIR="$( dirname $( readlink -f -- $0 ) )"
+MYBASE="$( readlink -f $MYDIR/.. )"
+
+$MYBASE/bin/setup-venv 2>/dev/null
+
+[[ -f $MYBASE/.env ]] && source $MYBASE/.env
+
+$MYBASE/venv/bin/ansible-playbook --extra-vars="deployer_base=$MYBASE" -v -i $MYBASE/hosts $MYBASE/config/deploy.yml

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+err() {
+  echo "$@" 1>&2
+}
+
+export PATH=${DEPLOYER_PYTHON_PATH:-/opt/hii/python-2.7.10/bin}:$PATH
+
+if [[ "$1" == '-r' ]]; then
+  ./bin/app-ctl stop &> /dev/null && sleep 2
+  ./bin/worker-ctl stop &> /dev/null && sleep 2
+  shift
+  rm -rf venv
+fi
+
+if [[ ! -d ./venv ]]; then
+  virtualenv ./venv
+  ./venv/bin/pip install --upgrade pip
+fi
+
+if [[ -f requirements.txt ]]; then
+  ./venv/bin/pip --no-cache-dir install --upgrade -r requirements.txt
+fi
+
+# patch ansible w/ new digital_ocean_v2_api
+
+echo rsync --delete -rv config/digital_ocean/ ./venv/lib/python2.7/site-packages/ansible/modules/core/cloud/digital_ocean 1>&2
+     rsync --delete -rv config/digital_ocean/ ./venv/lib/python2.7/site-packages/ansible/modules/core/cloud/digital_ocean 1>&2
+
+err
+err "---------------------------------------------------------------------------------"
+err "Virtual Environment installed... to activate the environment in your shell run:"
+err "---------------------------------------------------------------------------------"
+err "source ./venv/bin/activate"
+err

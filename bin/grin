@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+[[ "$#" < 1 ]] && echo "Usage: $0 <grep_regex>"
+
+case $1 in
+  -*) args="$1"; shift
+esac
+
+find . -type f -size -10M | egrep -v './(tmp|.git|venv|lib|inventory.py|bin)' | xargs -r grep ${args} -in "$@"
+
